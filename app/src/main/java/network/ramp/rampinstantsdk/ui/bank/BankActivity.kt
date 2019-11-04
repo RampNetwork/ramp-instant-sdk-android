@@ -14,7 +14,6 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bank.*
-import kotlinx.android.synthetic.main.activity_main.*
 import network.ramp.rampinstantsdk.R
 import network.ramp.rampinstantsdk.ui.bank.BankJsInterface.Companion.bankJsInterfaceName
 import timber.log.Timber
@@ -76,12 +75,12 @@ class BankActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        webview.saveState(outState)
+        bankWebView.saveState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        webview.restoreState(savedInstanceState)
+        bankWebView.restoreState(savedInstanceState)
     }
 
     companion object {
@@ -97,8 +96,9 @@ class BankActivity : AppCompatActivity() {
             request: WebResourceRequest?
         ): Boolean {
             Timber.d("shouldOverrideUrlLoading ${request?.url}")
-            view?.loadUrl(request!!.url.toString())
-
+            request?.let {
+                view?.loadUrl(it.url.toString())
+            }
             return false
         }
 
