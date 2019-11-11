@@ -6,7 +6,7 @@ import network.ramp.instantsdk.events.model.Event
 import timber.log.Timber
 
 
-class RampInstantMobileInterface(
+internal class RampInstantMobileInterface(
     val onSuccess: () -> Unit,
     val onError: () -> Unit,
     val onClose: () -> Unit
@@ -53,7 +53,7 @@ class RampInstantMobileInterface(
     }
 
     companion object {
-        const val RampInstantMobileInterfaceName = "RampInstantMobile"
+        internal const val RampInstantMobileInterfaceName = "RampInstantMobile"
         private const val SUCCESS = "success"
         private const val ERROR = "error"
         private const val CLOSE = "close"

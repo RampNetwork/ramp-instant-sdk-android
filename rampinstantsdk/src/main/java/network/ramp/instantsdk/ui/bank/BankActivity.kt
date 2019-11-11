@@ -18,7 +18,7 @@ import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
 import timber.log.Timber
 
-class BankActivity : AppCompatActivity() {
+internal class BankActivity : AppCompatActivity() {
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(arg0: Context, intent: Intent) {

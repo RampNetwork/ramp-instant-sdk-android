@@ -18,21 +18,17 @@ import network.ramp.instantsdk.ui.bank.BankActivity.Companion.finishReceiver
 import timber.log.Timber
 
 
-class RampInstantActivity : AppCompatActivity() {
+internal class RampInstantActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        initLogging()
         setupWebView(webview)
         if (savedInstanceState == null) {
             webview.loadUrl(rampUrl)
         }
     }
 
-    private fun initLogging() {
-        Timber.plant(Timber.DebugTree())
-    }
 
     @SuppressLint("SetJavaScriptEnabled")
     fun setupWebView(webView: WebView) {

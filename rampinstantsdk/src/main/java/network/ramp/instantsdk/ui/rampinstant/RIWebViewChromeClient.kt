@@ -11,7 +11,7 @@ import network.ramp.instantsdk.ui.bank.BankActivity
 import network.ramp.instantsdk.ui.bank.BankActivity.Companion.intentUrl
 
 
-class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
+internal class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
 
     override fun onCreateWindow(
         view: WebView?,
