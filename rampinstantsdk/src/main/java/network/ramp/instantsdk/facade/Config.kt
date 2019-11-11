@@ -1,5 +1,10 @@
 package network.ramp.instantsdk.facade
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+
+@Parcelize
 data class Config(
     /**
      * 'ETH' or 'DAI'
@@ -7,6 +12,7 @@ data class Config(
     val swapAsset: String,
     /**
      * int string - wei or token units
+     * 1 Eth = 1 * 10 ** 18
      */
     val swapAmount: String,
     /**
@@ -25,5 +31,5 @@ data class Config(
      * allows to provide an alternative URL to load
      * a non-production version of the widget
      */
-    val url: String?
-)
+    val url: String? = "https://ri-widget-dev.firebaseapp.com"
+) : Parcelable

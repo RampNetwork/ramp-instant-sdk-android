@@ -3,7 +3,6 @@ package network.ramp.instantsdk.ui.rampinstant
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
@@ -14,18 +13,25 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
-import network.ramp.instantsdk.ui.bank.BankActivity.Companion.finishReceiver
+import network.ramp.instantsdk.facade.Config
+import network.ramp.instantsdk.facade.RampInstantSDK.Companion.CONFIG_EXTRA
+import network.ramp.instantsdk.ui.bank.BankActivity.Companion.FINISH_RECEIVER
 import timber.log.Timber
 
 
 internal class RampInstantActivity : AppCompatActivity() {
 
+    lateinit var config: Config
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setupWebView(webview)
+
+        config = intent.extras?.getParcelable(CONFIG_EXTRA)!! //TODO replace it
+
         if (savedInstanceState == null) {
-            webview.loadUrl(rampUrl)
+            webview.loadUrl(buildUrl(config))
         }
     }
 
@@ -39,11 +45,11 @@ internal class RampInstantActivity : AppCompatActivity() {
 
         webView.addJavascriptInterface(RampInstantMobileInterface(
             onSuccess = {
-                val intent = Intent(finishReceiver)
+                val intent = Intent(FINISH_RECEIVER)
                 sendBroadcast(intent)
             },
             onError = {
-                val intent = Intent(finishReceiver)
+                val intent = Intent(FINISH_RECEIVER)
                 sendBroadcast(intent)
             },
             onClose = {
@@ -63,10 +69,6 @@ internal class RampInstantActivity : AppCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         webview.saveState(outState)
@@ -77,9 +79,15 @@ internal class RampInstantActivity : AppCompatActivity() {
         webview.restoreState(savedInstanceState)
     }
 
-    companion object {
-        const val rampUrl =
-            "https://ri-widget-dev.firebaseapp.com/?hostAppName=Maker+DAO&hostLogoUrl=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F2600%2F1*nqtMwugX7TtpcS-5c3lRjw.png&userAddress=0xe2E0256d6785d49eC7BadCD1D44aDBD3F6B0Ab58&variant=mobile&hostUrl=*"
+    private fun buildUrl(config: Config): String {
+        return config.url +
+                "?hostAppName=${config.hostAppName}" +
+                "&hostLogoUrl=${config.hostLogoUrl}" +
+                "&userAddress=${config.userAddress}" +
+                "&swapAsset=${config.swapAsset}" +
+                "&swapAmount=${config.swapAmount}" +
+                "&variant=mobile&" +
+                "&hostUrl=*"
     }
 
     inner class RampInstantWebViewClient : WebViewClient() {

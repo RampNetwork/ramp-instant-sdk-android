@@ -13,6 +13,7 @@ internal class RampInstantMobileInterface(
 ) {
 
     @JavascriptInterface
+    @Suppress("unused")
     fun postMessage(payloadJson: String) {
         Timber.d("JS INTERFACE postMessage $payloadJson")
 

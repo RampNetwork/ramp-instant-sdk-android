@@ -8,7 +8,7 @@ import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import network.ramp.instantsdk.ui.bank.BankActivity
-import network.ramp.instantsdk.ui.bank.BankActivity.Companion.intentUrl
+import network.ramp.instantsdk.ui.bank.BankActivity.Companion.INTENT_URL
 
 
 internal class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
@@ -23,7 +23,7 @@ internal class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
         newView.webViewClient = object : WebViewClient() {
             override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
                 val intent = Intent(context, BankActivity::class.java)
-                intent.putExtra(intentUrl, url)
+                intent.putExtra(INTENT_URL, url)
                 context.startActivity(intent)
                 newView.removeAllViews()
                 newView.destroy()

@@ -5,7 +5,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Configuration
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.view.View
@@ -23,7 +22,7 @@ internal class BankActivity : AppCompatActivity() {
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(arg0: Context, intent: Intent) {
             when (intent.action) {
-                finishReceiver -> {
+                FINISH_RECEIVER -> {
                     finish()
                 }
             }
@@ -33,11 +32,11 @@ internal class BankActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        registerReceiver(broadcastReceiver, IntentFilter(finishReceiver))
+        registerReceiver(broadcastReceiver, IntentFilter(FINISH_RECEIVER))
 
         setContentView(R.layout.activity_bank)
 
-        val url = intent.getStringExtra(intentUrl)
+        val url = intent.getStringExtra(INTENT_URL)
 
         setupWebView(bankWebView)
 
@@ -76,10 +75,6 @@ internal class BankActivity : AppCompatActivity() {
         }
     }
 
-    override fun onConfigurationChanged(newConfig: Configuration) {
-        super.onConfigurationChanged(newConfig)
-    }
-
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         bankWebView.saveState(outState)
@@ -91,8 +86,8 @@ internal class BankActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val finishReceiver = "finish_activity"
-        const val intentUrl = "URL"
+        const val FINISH_RECEIVER = "finish_activity"
+        const val INTENT_URL = "url"
     }
 
 
