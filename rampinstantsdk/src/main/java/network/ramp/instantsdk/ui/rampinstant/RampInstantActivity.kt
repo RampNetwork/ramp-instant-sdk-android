@@ -28,13 +28,14 @@ internal class RampInstantActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setupWebView(webview)
 
-        config = intent.extras?.getParcelable(CONFIG_EXTRA)!! //TODO replace it
+        intent.extras?.getParcelable<Config>(CONFIG_EXTRA)?.let {
+            config = it
+        } ?: returnOnError("Config object cannot be null")
 
         if (savedInstanceState == null) {
             webview.loadUrl(buildUrl(config))
         }
     }
-
 
     @SuppressLint("SetJavaScriptEnabled")
     fun setupWebView(webView: WebView) {
@@ -88,6 +89,11 @@ internal class RampInstantActivity : AppCompatActivity() {
                 "&swapAmount=${config.swapAmount}" +
                 "&variant=mobile&" +
                 "&hostUrl=*"
+    }
+
+    private fun returnOnError(message: String) {
+        Timber.e(message)
+        finish()
     }
 
     inner class RampInstantWebViewClient : WebViewClient() {

@@ -90,7 +90,6 @@ internal class BankActivity : AppCompatActivity() {
         const val INTENT_URL = "url"
     }
 
-
     inner class BankWebViewClient : WebViewClient() {
 
         override fun shouldOverrideUrlLoading(
@@ -106,9 +105,7 @@ internal class BankActivity : AppCompatActivity() {
 
         override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
             Timber.d("onPageStarted $url")
-
             super.onPageStarted(view, url, favicon)
-
         }
 
         override fun onPageFinished(view: WebView, url: String) {
