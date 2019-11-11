@@ -1,4 +1,4 @@
-package network.ramp.rampinstantsdk.ui.rampinstant
+package network.ramp.instantsdk.ui.rampinstant
 
 
 import android.annotation.SuppressLint
@@ -12,8 +12,9 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
-import network.ramp.rampinstantsdk.R
-import network.ramp.rampinstantsdk.ui.bank.BankActivity.Companion.finishReceiver
+import network.ramp.instantsdk.R
+import network.ramp.instantsdk.events.RampInstantMobileInterface
+import network.ramp.instantsdk.ui.bank.BankActivity.Companion.finishReceiver
 import timber.log.Timber
 
 
@@ -22,11 +23,15 @@ class RampInstantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        initLogging()
         setupWebView(webview)
         if (savedInstanceState == null) {
             webview.loadUrl(rampUrl)
         }
+    }
+
+    private fun initLogging() {
+        Timber.plant(Timber.DebugTree())
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -36,7 +41,7 @@ class RampInstantActivity : AppCompatActivity() {
         webView.settings.setSupportMultipleWindows(true)
         webView.webViewClient = RampInstantWebViewClient()
 
-        webView.addJavascriptInterface(MainWebAppInterface(
+        webView.addJavascriptInterface(RampInstantMobileInterface(
             onSuccess = {
                 val intent = Intent(finishReceiver)
                 sendBroadcast(intent)
@@ -48,7 +53,7 @@ class RampInstantActivity : AppCompatActivity() {
             onClose = {
                 finish()
             }
-        ), rampJsInterfaceName)
+        ), RampInstantMobileInterface.RampInstantMobileInterfaceName)
 
         webView.webChromeClient = RIWebViewChromeClient(this)
     }
@@ -78,8 +83,7 @@ class RampInstantActivity : AppCompatActivity() {
 
     companion object {
         const val rampUrl =
-            "https://ri-widget-dev.firebaseapp.com/?hostAppName=Maker+DAO&hostLogoUrl=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F2600%2F1*nqtMwugX7TtpcS-5c3lRjw.png&swapAsset=ETH&userAddress=0xe2E0256d6785d49eC7BadCD1D44aDBD3F6B0Ab58&variant=mobile&hostUrl=*"
-        const val rampJsInterfaceName = "RampInstantMobile"
+            "https://ri-widget-dev.firebaseapp.com/?hostAppName=Maker+DAO&hostLogoUrl=https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F2600%2F1*nqtMwugX7TtpcS-5c3lRjw.png&userAddress=0xe2E0256d6785d49eC7BadCD1D44aDBD3F6B0Ab58&variant=mobile&hostUrl=*"
     }
 
     inner class RampInstantWebViewClient : WebViewClient() {

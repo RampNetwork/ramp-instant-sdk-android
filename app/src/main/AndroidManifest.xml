@@ -1,10 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="network.ramp.rampinstantsdk">
+    package="network.ramp.instantsdk">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name="network.ramp.rampinstantsdk.App"
+        android:name="network.ramp.instantsdk.App"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.demo.DemoActivity"
+            android:name="network.ramp.instantsdk.demo.DemoActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,11 +21,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="network.ramp.rampinstantsdk.ui.bank.BankActivity"
+            android:name="network.ramp.instantsdk.ui.bank.BankActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.rampinstant.RampInstantActivity"
+            android:name="network.ramp.instantsdk.ui.rampinstant.RampInstantActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

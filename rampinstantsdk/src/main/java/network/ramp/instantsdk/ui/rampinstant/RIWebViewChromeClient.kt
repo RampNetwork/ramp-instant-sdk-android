@@ -1,4 +1,4 @@
-package network.ramp.rampinstantsdk.ui.rampinstant
+package network.ramp.instantsdk.ui.rampinstant
 
 import android.content.Context
 import android.content.Intent
@@ -7,8 +7,8 @@ import android.os.Message
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import android.webkit.WebViewClient
-import network.ramp.rampinstantsdk.ui.bank.BankActivity
-import network.ramp.rampinstantsdk.ui.bank.BankActivity.Companion.intentUrl
+import network.ramp.instantsdk.ui.bank.BankActivity
+import network.ramp.instantsdk.ui.bank.BankActivity.Companion.intentUrl
 
 
 class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
@@ -25,6 +25,7 @@ class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
                 val intent = Intent(context, BankActivity::class.java)
                 intent.putExtra(intentUrl, url)
                 context.startActivity(intent)
+                newView.removeAllViews()
                 newView.destroy()
             }
         }

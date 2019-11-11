@@ -1,4 +1,4 @@
-package network.ramp.rampinstantsdk
+package network.ramp.instantsdk
 
 import org.junit.Test
 

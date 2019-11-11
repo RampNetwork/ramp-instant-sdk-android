@@ -1,2 +1,2 @@
-include ':app'
-rootProject.name='Ramp Instatn SDK'
+include ':app', ':rampinstantsdk'
+rootProject.name='Ramp Instant SDK'

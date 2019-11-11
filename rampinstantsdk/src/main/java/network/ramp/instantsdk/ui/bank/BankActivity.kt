@@ -1,4 +1,4 @@
-package network.ramp.rampinstantsdk.ui.bank
+package network.ramp.instantsdk.ui.bank
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -14,8 +14,8 @@ import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bank.*
-import network.ramp.rampinstantsdk.R
-import network.ramp.rampinstantsdk.ui.bank.BankJsInterface.Companion.bankJsInterfaceName
+import network.ramp.instantsdk.R
+import network.ramp.instantsdk.events.RampInstantMobileInterface
 import timber.log.Timber
 
 class BankActivity : AppCompatActivity() {
@@ -33,6 +33,7 @@ class BankActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         registerReceiver(broadcastReceiver, IntentFilter(finishReceiver))
 
         setContentView(R.layout.activity_bank)
@@ -46,6 +47,11 @@ class BankActivity : AppCompatActivity() {
         }
     }
 
+    override fun onDestroy() {
+        ///unregisterReceiver(broadcastReceiver)
+        super.onDestroy()
+    }
+
     @SuppressLint("SetJavaScriptEnabled")
     fun setupWebView(webView: WebView) {
         webView.settings.javaScriptEnabled = true
@@ -54,10 +60,11 @@ class BankActivity : AppCompatActivity() {
         webView.settings.domStorageEnabled = true
         webView.webViewClient = BankWebViewClient()
         webView.addJavascriptInterface(
-            BankJsInterface(
+            RampInstantMobileInterface(
                 onSuccess = { runOnUiThread { this.finish() } },
-                onError = { runOnUiThread { this.finish() } }),
-            bankJsInterfaceName
+                onError = { runOnUiThread { this.finish() } },
+                onClose = { runOnUiThread { this.finish() } }),
+            RampInstantMobileInterface.RampInstantMobileInterfaceName
         )
     }
 

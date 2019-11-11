@@ -1,4 +1,4 @@
-package network.ramp.rampinstantsdk
+package network.ramp.instantsdk
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
