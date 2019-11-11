@@ -25,7 +25,6 @@ class BankActivity : AppCompatActivity() {
             when (intent.action) {
                 finishReceiver -> {
                     finish()
-                    unregisterReceiver(this)
                 }
             }
         }
@@ -48,8 +47,9 @@ class BankActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        ///unregisterReceiver(broadcastReceiver)
         super.onDestroy()
+
+        unregisterReceiver(broadcastReceiver)
     }
 
     @SuppressLint("SetJavaScriptEnabled")
