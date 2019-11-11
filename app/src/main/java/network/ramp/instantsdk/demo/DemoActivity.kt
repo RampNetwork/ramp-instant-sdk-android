@@ -8,7 +8,7 @@ import network.ramp.instantsdk.facade.RampInstantSDK
 
 class DemoActivity : AppCompatActivity() {
 
-    val rampInstantSDK = RampInstantSDK()
+    private val rampInstantSDK = RampInstantSDK()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
