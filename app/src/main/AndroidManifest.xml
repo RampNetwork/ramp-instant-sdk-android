@@ -22,16 +22,10 @@
         <activity
             android:name="network.ramp.instantsdk.ui.bank.BankActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/RampInstant.NoActionBar" />
         <activity
             android:name="network.ramp.instantsdk.ui.rampinstant.RampInstantActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/RampInstant.NoActionBar"></activity>
     </application>
 </manifest>
