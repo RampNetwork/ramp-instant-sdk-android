@@ -26,14 +26,14 @@ internal class RampInstantActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupWebView(webview)
+        setupWebView(webView)
 
         intent.extras?.getParcelable<Config>(CONFIG_EXTRA)?.let {
             config = it
         } ?: returnOnError("Config object cannot be null")
 
         if (savedInstanceState == null) {
-            webview.loadUrl(buildUrl(config))
+            webView.loadUrl(buildUrl(config))
         }
     }
 
@@ -63,8 +63,8 @@ internal class RampInstantActivity : AppCompatActivity() {
 
 
     override fun onBackPressed() {
-        if (webview.copyBackForwardList().currentIndex > 0) {
-            webview.goBack()
+        if (webView.copyBackForwardList().currentIndex > 0) {
+            webView.goBack()
         } else {
             super.onBackPressed()
         }
@@ -72,12 +72,12 @@ internal class RampInstantActivity : AppCompatActivity() {
 
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
-        webview.saveState(outState)
+        webView.saveState(outState)
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
-        webview.restoreState(savedInstanceState)
+        webView.restoreState(savedInstanceState)
     }
 
     private fun buildUrl(config: Config): String {
