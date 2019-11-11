@@ -57,13 +57,19 @@ Ramp Instant Android SDK consists of two main types: Config and RampInstantSDK.
 
 Config data class contains all the information necessary for Ramp to initialize. Its parameters are as follows:
 
-hostLogoUrl: URL to your app's logo
-hostAppName: your app's name
-userAddress: 0x-prefixed ETH address of the buyer
-swapAsset: 'ETH' or 'DAI' (optional)
-swapAmount: int string - wei or token units (optional)
-webhookStatusUrl: your URL for webhook updates (optional)
-url: allows to provide an alternative URL to load a non-production version of the widget (optional)
+**hostLogoUrl**: URL to your app's logo
+
+**hostAppName**: your app's name
+
+**userAddress**: 0x-prefixed ETH address of the buyer
+
+**swapAsset**: 'ETH' or 'DAI' (optional)
+
+**swapAmount**: int string - wei or token units (optional)
+
+**webhookStatusUrl**: your URL for webhook updates (optional)
+
+**url**: allows to provide an alternative URL to load a non-production version of the widget (optional)
 
 RampInstantSDK is facade for the sdk. It starts Ramp widget, which allows to buy crypto. 
 To start using RampInstant in your app, simply create Config instance with parameters of your choice, then instantiate RampInstantSDK using Config instance and call 'show' method.
@@ -75,4 +81,5 @@ rampInstantSDK.show(context, config)
 
 ```
 
-
+## License
+TODO()
