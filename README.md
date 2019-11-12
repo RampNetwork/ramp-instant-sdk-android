@@ -1,6 +1,7 @@
 # ramp-instant-sdk-android
 [![platform](https://img.shields.io/badge/platform-Android-yellow.svg)](https://www.android.com)
 [![API](https://img.shields.io/badge/API-24%2B-brightgreen.svg?style=flat)](https://android-arsenal.com/api?level=24)
+[![](https://jitpack.io/v/RampNetwork/ramp-instant-sdk-android.svg)](https://jitpack.io/#RampNetwork/ramp-instant-sdk-android)
 
 
 Ramp Instant is a library to integrate easy cryptocurrency buy with Ramp.
@@ -47,7 +48,7 @@ Add this to your module's `build.gradle` file (make sure the version matches the
 ```gradle
 dependencies {
 	...
-	implementation 'com.github.RampNetwork:ramp-instant-sdk-android:$version'
+	    implementation 'com.github.RampNetwork:ramp-instant-sdk-android:v0.1.0'
 }
 ```
 
