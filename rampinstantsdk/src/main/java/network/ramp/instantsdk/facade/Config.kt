@@ -31,5 +31,10 @@ data class Config(
      * allows to provide an alternative URL to load
      * a non-production version of the widget
      */
-    val url: String? = "https://ri-widget-dev.firebaseapp.com"
+    val url: String? = "https://ri-widget-dev.firebaseapp.com",
+    /**
+     * your URL for webhook updates (optional)
+     */
+    val webhookStatusUrl: String?
+
 ) : Parcelable
