@@ -1,6 +1,7 @@
 package network.ramp.instantsdk.demo
 
 import android.os.Bundle
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_demo.*
 import network.ramp.instantsdk.R
@@ -18,13 +19,22 @@ class DemoActivity : AppCompatActivity() {
         demoButton.setOnClickListener {
             rampInstantSDK.show(
                 this, Config(
-                    swapAsset = swapAssetEditText.text.toString(),
-                    swapAmount = swapAmountEditText.text.toString(),
-                    userAddress = userAddressEditText.text.toString(),
-                    hostLogoUrl = hostLogoUrlEditText.text.toString(),
-                    hostAppName = "DemoRampInstantSDK"
+                    swapAsset = swapAssetEditText.getContent(),
+                    swapAmount = swapAmountEditText.getContent(),
+                    userAddress = userAddressEditText.getContent(),
+                    hostLogoUrl = hostLogoUrlEditText.getContent(),
+                    hostAppName = hostAppNameEditText.getContent(),
+                    webhookStatusUrl = webHookStatusUrlEditText.getContent()
                 )
             )
         }
+    }
+}
+
+fun EditText.getContent(): String {
+    return when {
+        this.text.isNotBlank() -> this.text.toString()
+        this.hint != null && this.hint.isNotBlank() -> this.hint.toString()
+        else -> ""
     }
 }

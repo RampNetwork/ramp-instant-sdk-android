@@ -33,6 +33,7 @@ internal class RampInstantActivity : AppCompatActivity() {
         } ?: returnOnError("Config object cannot be null")
 
         if (savedInstanceState == null) {
+            Timber.d(buildUrl(config))
             webView.loadUrl(buildUrl(config))
         }
     }
@@ -85,10 +86,17 @@ internal class RampInstantActivity : AppCompatActivity() {
                 "?hostAppName=${config.hostAppName}" +
                 "&hostLogoUrl=${config.hostLogoUrl}" +
                 "&userAddress=${config.userAddress}" +
-                "&swapAsset=${config.swapAsset}" +
-                "&swapAmount=${config.swapAmount}" +
+                concatenateIfNotEmpty("&swapAsset=", config.swapAsset) +
+                concatenateIfNotEmpty("&swapAmount=", config.swapAmount) +
+                concatenateIfNotEmpty("&webhookStatusUrl=", config.webhookStatusUrl) +
                 "&variant=mobile&" +
                 "&hostUrl=*"
+    }
+
+    private fun concatenateIfNotEmpty(str1: String, str2: String): String {
+        return if (str1.isNotBlank() && str2.isNotBlank()) {
+            str1 + str2
+        } else ""
     }
 
     private fun returnOnError(message: String) {
