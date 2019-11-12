@@ -35,6 +35,6 @@ data class Config(
     /**
      * your URL for webhook updates (optional)
      */
-    val webhookStatusUrl: String?
+    val webhookStatusUrl: String? = null
 
 ) : Parcelable
