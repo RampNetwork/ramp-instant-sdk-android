@@ -3,7 +3,8 @@ package network.ramp.instantsdk.facade
 import android.content.Context
 import android.content.Intent
 import network.ramp.instantsdk.BuildConfig
-import network.ramp.instantsdk.events.model.Event
+import network.ramp.instantsdk.events.model.RampInstantEvent
+import network.ramp.instantsdk.events.model.InternalEvent
 import network.ramp.instantsdk.ui.rampinstant.RampInstantActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -20,7 +21,7 @@ class RampInstantSDK(
     private val webhookStatusUrl: String = ""
 ) {
 
-    private lateinit var holder: (event: Event) -> Unit
+    private lateinit var rampInstantEventHolder: (rampInstantEvent: RampInstantEvent) -> Unit
 
     init {
         if (BuildConfig.DEBUG) {
@@ -40,22 +41,25 @@ class RampInstantSDK(
                 webhookStatusUrl = webhookStatusUrl
             )
         )
-
-        EventBus.getDefault().register(this)
         context.startActivity(intent)
     }
 
-    fun on(onEvent: (event: Event) -> Unit) {
-        holder = onEvent
-    }
-
-    fun unsubscribeFromEvents() {
-        EventBus.getDefault().unregister(this)
+    fun on(onRampInstantEvent: (rampInstantEvent: RampInstantEvent) -> Unit) {
+        EventBus.getDefault().register(this)
+        rampInstantEventHolder = onRampInstantEvent
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onEvent(event: Event) {
-        holder.invoke(event)
+    internal fun onWidgetEvent(rampInstantEvent: RampInstantEvent) {
+        rampInstantEventHolder.invoke(rampInstantEvent)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    internal fun onInternalEvent(internalEvent: InternalEvent) {
+        Timber.d("onInternalEvent: $internalEvent")
+        when (internalEvent) {
+            is InternalEvent.CLOSE -> EventBus.getDefault().unregister(this)
+        }
     }
 
     private fun initLogging() {

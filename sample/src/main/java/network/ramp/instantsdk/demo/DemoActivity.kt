@@ -29,15 +29,10 @@ class DemoActivity : AppCompatActivity() {
             )
             rampInstantSDK.on { event ->
                 Toast.makeText(applicationContext, event.type, Toast.LENGTH_SHORT).show()
-                Log.d("Event", event.type)
+                Log.d("Widget Event", event.type)
             }
             rampInstantSDK.show()
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        rampInstantSDK.unsubscribeFromEvents()
     }
 }
 

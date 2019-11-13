@@ -34,7 +34,6 @@ internal class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
         transport.webView = newView
         resultMsg.sendToTarget()
         return true
-
     }
 }
 

@@ -13,9 +13,11 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
+import network.ramp.instantsdk.events.model.InternalEvent
 import network.ramp.instantsdk.facade.Config
 import network.ramp.instantsdk.facade.RampInstantSDK.Companion.CONFIG_EXTRA
 import network.ramp.instantsdk.ui.bank.BankActivity.Companion.FINISH_RECEIVER
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 
@@ -79,6 +81,11 @@ internal class RampInstantActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         webView.restoreState(savedInstanceState)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        EventBus.getDefault().post(InternalEvent.CLOSE)
     }
 
     private fun buildUrl(config: Config): String {
