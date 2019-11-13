@@ -3,8 +3,8 @@ package network.ramp.instantsdk.facade
 import android.content.Context
 import android.content.Intent
 import network.ramp.instantsdk.BuildConfig
-import network.ramp.instantsdk.events.model.RampInstantEvent
 import network.ramp.instantsdk.events.model.InternalEvent
+import network.ramp.instantsdk.events.model.RampInstantEvent
 import network.ramp.instantsdk.ui.rampinstant.RampInstantActivity
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe

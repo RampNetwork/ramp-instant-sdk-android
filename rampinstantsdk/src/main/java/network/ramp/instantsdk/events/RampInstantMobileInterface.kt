@@ -17,7 +17,6 @@ internal class RampInstantMobileInterface(
     fun postMessage(payloadJson: String) {
         Timber.d("JS INTERFACE postMessage $payloadJson")
 
-
         val moshi = Moshi.Builder().build()
         val jsonAdapter = moshi.adapter<RampInstantEvent>(RampInstantEvent::class.java)
         val payload = jsonAdapter.fromJson(payloadJson)

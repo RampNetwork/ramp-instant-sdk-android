@@ -27,10 +27,11 @@ class DemoActivity : AppCompatActivity() {
                 hostAppName = hostAppNameEditText.getContent(),
                 webhookStatusUrl = webHookStatusUrlEditText.getContent()
             )
-            rampInstantSDK.on { event ->
-                Toast.makeText(applicationContext, event.type, Toast.LENGTH_SHORT).show()
-                Log.d("Widget Event", event.type)
-            }
+            if (eventSwitch.isChecked)
+                rampInstantSDK.on { event ->
+                    Toast.makeText(applicationContext, event.type, Toast.LENGTH_SHORT).show()
+                    Log.d("Widget Event", event.type)
+                }
             rampInstantSDK.show()
         }
     }
