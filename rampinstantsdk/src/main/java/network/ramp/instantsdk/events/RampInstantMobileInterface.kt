@@ -3,6 +3,7 @@ package network.ramp.instantsdk.events
 import android.webkit.JavascriptInterface
 import com.squareup.moshi.Moshi
 import network.ramp.instantsdk.events.model.Event
+import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 
 
@@ -17,15 +18,17 @@ internal class RampInstantMobileInterface(
     fun postMessage(payloadJson: String) {
         Timber.d("JS INTERFACE postMessage $payloadJson")
 
+
         val moshi = Moshi.Builder().build()
         val jsonAdapter = moshi.adapter<Event>(Event::class.java)
         val payload = jsonAdapter.fromJson(payloadJson)
+
+        EventBus.getDefault().post(Event(payload?.type ?: "", payload?.payload ?: ""))
 
         when (payload?.type) {
             SUCCESS -> {
                 onSuccess()
             }
-
             ERROR -> {
                 onError()
             }

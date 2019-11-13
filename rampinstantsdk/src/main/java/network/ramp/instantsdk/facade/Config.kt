@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 
 @Parcelize
-data class Config(
+internal data class Config(
     /**
      * 'ETH' or 'DAI'
      */

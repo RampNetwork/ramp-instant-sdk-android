@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="8dp"
     android:background="@color/background"
+    android:padding="8dp"
     tools:context=".demo.DemoActivity">
 
 
@@ -103,9 +103,10 @@
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:text="0xab5801a7d398351b8be11c439e05c5b3259aec9b"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/webhook " />
+        app:layout_constraintTop_toBottomOf="@+id/webhook" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -167,7 +168,7 @@
         app:layout_constraintTop_toBottomOf="@+id/hostAppNameEditText" />
 
     <TextView
-        android:id="@+id/webhook "
+        android:id="@+id/webhook"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

@@ -1,33 +1,43 @@
 package network.ramp.instantsdk.demo
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_demo.*
 import network.ramp.instantsdk.R
-import network.ramp.instantsdk.facade.Config
 import network.ramp.instantsdk.facade.RampInstantSDK
 
 class DemoActivity : AppCompatActivity() {
 
-    private val rampInstantSDK = RampInstantSDK()
+    private lateinit var rampInstantSDK: RampInstantSDK
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_demo)
 
         demoButton.setOnClickListener {
-            rampInstantSDK.show(
-                this, Config(
-                    swapAsset = swapAssetEditText.getContent(),
-                    swapAmount = swapAmountEditText.getContent(),
-                    userAddress = userAddressEditText.getContent(),
-                    hostLogoUrl = hostLogoUrlEditText.getContent(),
-                    hostAppName = hostAppNameEditText.getContent(),
-                    webhookStatusUrl = webHookStatusUrlEditText.getContent()
-                )
+            rampInstantSDK = RampInstantSDK(
+                this,
+                swapAsset = swapAssetEditText.getContent(),
+                swapAmount = swapAmountEditText.getContent(),
+                userAddress = userAddressEditText.getContent(),
+                hostLogoUrl = hostLogoUrlEditText.getContent(),
+                hostAppName = hostAppNameEditText.getContent(),
+                webhookStatusUrl = webHookStatusUrlEditText.getContent()
             )
+            rampInstantSDK.on { event ->
+                Toast.makeText(applicationContext, event.type, Toast.LENGTH_SHORT).show()
+                Log.d("Event", event.type)
+            }
+            rampInstantSDK.show()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        rampInstantSDK.unsubscribeFromEvents()
     }
 }
 
