@@ -23,14 +23,15 @@ internal class RampInstantMobileInterface(
 
         EventBus.getDefault().post(RampInstantEvent(payload?.type ?: "", payload?.payload ?: ""))
 
-        when (payload?.type) {
+
+        //TODO() replace strings with types
+        when (payload?.type?.toUpperCase()) {
             SUCCESS -> {
                 onSuccess()
             }
             ERROR -> {
                 onError()
             }
-
             CLOSE -> {
                 onClose()
             }
@@ -56,9 +57,9 @@ internal class RampInstantMobileInterface(
 
     companion object {
         internal const val RampInstantMobileInterfaceName = "RampInstantMobile"
-        private const val SUCCESS = "success"
-        private const val ERROR = "error"
-        private const val CLOSE = "close"
+        private const val SUCCESS = "SUCCESS"
+        private const val ERROR = "ERROR"
+        private const val CLOSE = "CLOSE"
         private const val WIDGET_CLOSE = "WIDGET_CLOSE"
         private const val PURCHASE_CREATED = "PURCHASE_CREATED"
         private const val PURCHASE_SUCCESSFUL = "PURCHASE_SUCCESSFUL"
