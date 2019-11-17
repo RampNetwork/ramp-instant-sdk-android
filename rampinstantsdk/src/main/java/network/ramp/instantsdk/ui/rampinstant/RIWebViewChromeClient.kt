@@ -19,21 +19,26 @@ internal class RIWebViewChromeClient(val context: Context) : WebChromeClient() {
         isUserGesture: Boolean,
         resultMsg: Message?
     ): Boolean {
-        val newView = WebView(context)
-        newView.webViewClient = object : WebViewClient() {
-            override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
-                val intent = Intent(context, BankActivity::class.java)
-                intent.putExtra(INTENT_URL, url)
-                context.startActivity(intent)
-                newView.removeAllViews()
-                newView.destroy()
-            }
-        }
+        when {
+            isUserGesture -> {
+                val newView = WebView(context)
+                newView.webViewClient = object : WebViewClient() {
+                    override fun onPageStarted(view: WebView, url: String, favicon: Bitmap?) {
+                        val intent = Intent(context, BankActivity::class.java)
+                        intent.putExtra(INTENT_URL, url)
+                        context.startActivity(intent)
+                        newView.removeAllViews()
+                        newView.destroy()
+                    }
+                }
 
-        val transport = resultMsg?.obj as WebView.WebViewTransport
-        transport.webView = newView
-        resultMsg.sendToTarget()
-        return true
+                val transport = resultMsg?.obj as WebView.WebViewTransport
+                transport.webView = newView
+                resultMsg.sendToTarget()
+                return true
+            }
+            else -> return false
+        }
     }
 }
 

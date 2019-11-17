@@ -16,6 +16,7 @@ import network.ramp.instantsdk.events.RampInstantMobileInterface
 import network.ramp.instantsdk.events.model.InternalEvent
 import network.ramp.instantsdk.facade.Config
 import network.ramp.instantsdk.facade.RampInstantSDK.Companion.CONFIG_EXTRA
+import network.ramp.instantsdk.ui.bank.BankActivity
 import network.ramp.instantsdk.ui.bank.BankActivity.Companion.FINISH_RECEIVER
 import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
@@ -23,7 +24,7 @@ import timber.log.Timber
 
 internal class RampInstantActivity : AppCompatActivity() {
 
-    lateinit var config: Config
+    private lateinit var config: Config
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,12 @@ internal class RampInstantActivity : AppCompatActivity() {
             },
             onClose = {
                 finish()
+            },
+            onOpenUrl = { url ->
+                Timber.d("onOpenUrl")
+                val intent = Intent(this, BankActivity::class.java)
+                intent.putExtra(BankActivity.INTENT_URL, url)
+                startActivity(intent)
             }
         ), RampInstantMobileInterface.RampInstantMobileInterfaceName)
 
@@ -85,6 +92,7 @@ internal class RampInstantActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        webView.removeJavascriptInterface(RampInstantMobileInterface.RampInstantMobileInterfaceName)
         EventBus.getDefault().post(InternalEvent.CLOSE)
     }
 

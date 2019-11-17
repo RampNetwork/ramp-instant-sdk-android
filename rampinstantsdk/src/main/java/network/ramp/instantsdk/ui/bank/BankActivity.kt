@@ -62,7 +62,10 @@ internal class BankActivity : AppCompatActivity() {
             RampInstantMobileInterface(
                 onSuccess = { runOnUiThread { this.finish() } },
                 onError = { runOnUiThread { this.finish() } },
-                onClose = { runOnUiThread { this.finish() } }),
+                onClose = { runOnUiThread { this.finish() } },
+                onOpenUrl = {
+                    Timber.d("onOpenUrl")
+                }),
             RampInstantMobileInterface.RampInstantMobileInterfaceName
         )
     }
