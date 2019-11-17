@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bank.*
 import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
+import network.ramp.instantsdk.ui.rampinstant.RIWebViewChromeClient
 import timber.log.Timber
 
 internal class BankActivity : AppCompatActivity() {
@@ -68,6 +69,7 @@ internal class BankActivity : AppCompatActivity() {
                 }),
             RampInstantMobileInterface.RampInstantMobileInterfaceName
         )
+        webView.webChromeClient = RIWebViewChromeClient(this)
     }
 
     override fun onBackPressed() {
