@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.webkit.WebResourceRequest
@@ -17,6 +18,7 @@ import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
 import network.ramp.instantsdk.ui.rampinstant.RIWebViewChromeClient
 import timber.log.Timber
+
 
 internal class BankActivity : AppCompatActivity() {
 
@@ -65,7 +67,7 @@ internal class BankActivity : AppCompatActivity() {
                 onError = { runOnUiThread { this.finish() } },
                 onClose = { runOnUiThread { this.finish() } },
                 onOpenUrl = {
-                    Timber.d("onOpenUrl")
+                    Timber.d("onOpenUrl in BankActivity")
                 }),
             RampInstantMobileInterface.RampInstantMobileInterfaceName
         )
@@ -73,7 +75,7 @@ internal class BankActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (bankWebView.copyBackForwardList().currentIndex > 0) {
+        if (bankWebView.canGoBack()) {
             bankWebView.goBack()
         } else {
             super.onBackPressed()
@@ -93,6 +95,37 @@ internal class BankActivity : AppCompatActivity() {
     companion object {
         const val FINISH_RECEIVER = "finish_activity"
         const val INTENT_URL = "url"
+        val BROWSER_PACKAGE_NAMES = arrayOf(
+            "com.android.chrome",
+            "org.mozilla.firefox",
+            "com.UCMobile.intl",
+            "com.sec.android.app.sbrowser",
+            "com.opera.browser",
+            "com.opera.mini.native",
+            "com.microsoft.emmx"
+        )
+        const val ACTION_VIEW_INTENT = "android.intent.action.VIEW"
+    }
+
+    private fun openUrl(
+        context: Context,
+        destinationUrl: String,
+        view: WebView
+    ) {
+        var isAppOpened = false
+        try {
+            val intent = Intent(ACTION_VIEW_INTENT)
+            intent.data = Uri.parse(destinationUrl)
+            val activity = intent.resolveActivity(context.packageManager)
+            if (activity != null && !BROWSER_PACKAGE_NAMES.contains(activity.packageName)) {
+                context.startActivity(intent)
+                isAppOpened = true
+            }
+        } catch (ignore: Exception) {
+        }
+        if (!isAppOpened) {
+            view.loadUrl(destinationUrl)
+        }
     }
 
     inner class BankWebViewClient : WebViewClient() {
@@ -102,8 +135,10 @@ internal class BankActivity : AppCompatActivity() {
             request: WebResourceRequest?
         ): Boolean {
             Timber.d("shouldOverrideUrlLoading ${request?.url}")
-            request?.let {
-                view?.loadUrl(it.url.toString())
+            request?.let { webResourceRequest ->
+                view?.let {
+                    openUrl(this@BankActivity, webResourceRequest.url.toString(), it)
+                }
             }
             return false
         }
