@@ -8,6 +8,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -39,12 +40,23 @@ internal class BankActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_bank)
 
-        val url = intent.getStringExtra(INTENT_URL)
+        Log.d("ACTION", "action: $intent?.action")
+        Log.d("DATA", "data: ${intent?.data}")
+
+        val url = intent.getStringExtra(INTENT_URL) ?: intent?.data.toString()
+
 
         setupWebView(bankWebView)
 
         if (savedInstanceState == null) {
             bankWebView.loadUrl(url)
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.data?.let {
+            bankWebView.loadUrl(it.toString())
         }
     }
 
@@ -124,6 +136,7 @@ internal class BankActivity : AppCompatActivity() {
         } catch (ignore: Exception) {
         }
         if (!isAppOpened) {
+            Timber.d("isAppOpened : $isAppOpened  Load url $destinationUrl")
             view.loadUrl(destinationUrl)
         }
     }

@@ -50,14 +50,17 @@ internal class RampInstantActivity : AppCompatActivity() {
 
         webView.addJavascriptInterface(RampInstantMobileInterface(
             onSuccess = {
+                Timber.d("onSuccess")
                 val intent = Intent(FINISH_RECEIVER)
                 sendBroadcast(intent)
             },
             onError = {
+                Timber.d("onError")
                 val intent = Intent(FINISH_RECEIVER)
                 sendBroadcast(intent)
             },
             onClose = {
+                Timber.d("onClose")
                 finish()
             },
             onOpenUrl = { url ->
