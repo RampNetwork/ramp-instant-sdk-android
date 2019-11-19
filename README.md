@@ -32,11 +32,30 @@ Add this in your `AndroidManifest.xml` file:
         <activity
             android:name="network.ramp.instantsdk.ui.bank.BankActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@style/RampInstant.NoActionBar" />
-        <activity
-            android:name="network.ramp.instantsdk.ui.rampinstant.RampInstantActivity"
-            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
-            android:theme="@style/RampInstant.NoActionBar"></activity>
+            android:launchMode="singleTask"
+            android:theme="@style/RampInstant.NoActionBar">
+            <intent-filter android:label="deeplinkMail">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="auth.truelayer.com"
+                    android:pathPrefix="/oauth/callback"
+                    android:scheme="https" />
+            </intent-filter>
+            <intent-filter android:label="deeplinkBank">
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="pay.truelayer.com"
+                    android:pathPrefix="/openbanking/redirect-uri"
+                    android:scheme="https" />
+            </intent-filter>
+
+        </activity>
 	    ...
      </application>
 ```
