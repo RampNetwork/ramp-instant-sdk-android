@@ -24,29 +24,15 @@
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
             android:theme="@style/RampInstant.NoActionBar">
-            <intent-filter android:label="deeplinkMail">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
-                <data
-                    android:host="auth.truelayer.com"
-                    android:pathPrefix="/oauth/callback"
-                    android:scheme="https" />
-                <!-- note that the leading "/" is required for pathPrefix-->
-            </intent-filter>
-            <intent-filter android:label="deeplinkBank">
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with "http://www.example.com/gizmos” -->
                 <data
-                    android:host="pay.truelayer.com"
-                    android:pathPrefix="/openbanking/redirect-uri"
-                    android:scheme="https" />
-                <!-- note that the leading "/" is required for pathPrefix-->
+                    android:host="ramp"
+                    android:scheme="rampnetwork" />
             </intent-filter>
 
         </activity>

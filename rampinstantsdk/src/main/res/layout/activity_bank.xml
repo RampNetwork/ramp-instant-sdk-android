@@ -7,18 +7,20 @@
     android:background="@color/background"
     tools:context=".ui.bank.BankActivity">
 
-    <WebView
+    <network.ramp.instantsdk.webview.RampInstantWebView
         android:id="@+id/bankWebView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:background="@color/background"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-    </WebView>
+    </network.ramp.instantsdk.webview.RampInstantWebView>
 
     <ProgressBar
         android:id="@+id/bankProgressBar"

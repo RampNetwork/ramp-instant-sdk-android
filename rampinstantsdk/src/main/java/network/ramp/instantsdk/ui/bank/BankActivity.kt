@@ -1,6 +1,5 @@
 package network.ramp.instantsdk.ui.bank
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -8,7 +7,6 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -17,11 +15,18 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_bank.*
 import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
-import network.ramp.instantsdk.ui.rampinstant.RIWebViewChromeClient
 import timber.log.Timber
 
 
 internal class BankActivity : AppCompatActivity() {
+
+    private val jsInterface = RampInstantMobileInterface(
+        onSuccess = { runOnUiThread { this.finish() } },
+        onError = { runOnUiThread { this.finish() } },
+        onClose = { runOnUiThread { this.finish() } },
+        onOpenUrl = {
+            Timber.d("onOpenUrl in BankActivity")
+        })
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(arg0: Context, intent: Intent) {
@@ -35,18 +40,14 @@ internal class BankActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         registerReceiver(broadcastReceiver, IntentFilter(FINISH_RECEIVER))
-
         setContentView(R.layout.activity_bank)
+        bankWebView.setupWebView(BankWebViewClient(), jsInterface)
 
-        Log.d("ACTION", "action: $intent?.action")
-        Log.d("DATA", "data: ${intent?.data}")
+        val url = intent.getStringExtra(INTENT_URL)
 
-        val url = intent.getStringExtra(INTENT_URL) ?: intent?.data.toString()
-
-
-        setupWebView(bankWebView)
+        if (url == null)
+            finish()
 
         if (savedInstanceState == null) {
             bankWebView.loadUrl(url)
@@ -55,35 +56,12 @@ internal class BankActivity : AppCompatActivity() {
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
-        intent?.data?.let {
-            bankWebView.loadUrl(it.toString())
-        }
+        finish()
     }
 
     override fun onDestroy() {
         super.onDestroy()
-
         unregisterReceiver(broadcastReceiver)
-    }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    fun setupWebView(webView: WebView) {
-        webView.settings.javaScriptEnabled = true
-        webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.setSupportMultipleWindows(true)
-        webView.settings.domStorageEnabled = true
-        webView.webViewClient = BankWebViewClient()
-        webView.addJavascriptInterface(
-            RampInstantMobileInterface(
-                onSuccess = { runOnUiThread { this.finish() } },
-                onError = { runOnUiThread { this.finish() } },
-                onClose = { runOnUiThread { this.finish() } },
-                onOpenUrl = {
-                    Timber.d("onOpenUrl in BankActivity")
-                }),
-            RampInstantMobileInterface.RampInstantMobileInterfaceName
-        )
-        webView.webChromeClient = RIWebViewChromeClient(this)
     }
 
     override fun onBackPressed() {

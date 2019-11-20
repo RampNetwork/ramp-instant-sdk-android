@@ -7,11 +7,13 @@
     android:layout_height="match_parent"
     android:background="@color/background">
 
-    <WebView
+    <network.ramp.instantsdk.webview.RampInstantWebView
         android:id="@+id/webView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         app:layout_constraintBottom_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -19,7 +21,7 @@
         app:layout_constraintVertical_bias="0.49"
         tools:layout_constraintBottom_toTopOf="parent">
 
-    </WebView>
+    </network.ramp.instantsdk.webview.RampInstantWebView>
 
     <ProgressBar
         android:id="@+id/progressBar"

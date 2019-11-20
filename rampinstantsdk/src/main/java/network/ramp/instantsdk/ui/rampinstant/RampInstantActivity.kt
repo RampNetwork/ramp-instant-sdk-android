@@ -1,7 +1,6 @@
 package network.ramp.instantsdk.ui.rampinstant
 
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.os.Bundle
@@ -26,10 +25,34 @@ internal class RampInstantActivity : AppCompatActivity() {
 
     private lateinit var config: Config
 
+    private val jsInterface = RampInstantMobileInterface(
+        onSuccess = {
+            Timber.d("onSuccess")
+            val intent = Intent(FINISH_RECEIVER)
+            sendBroadcast(intent)
+        },
+        onError = {
+            Timber.d("onError")
+            val intent = Intent(FINISH_RECEIVER)
+            sendBroadcast(intent)
+        },
+        onClose = {
+            Timber.d("onClose")
+            finish()
+        },
+        onOpenUrl = { url ->
+            Timber.d("onOpenUrl")
+            val intent = Intent(this, BankActivity::class.java)
+            intent.putExtra(BankActivity.INTENT_URL, url)
+            startActivity(intent)
+        }
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        setupWebView(webView)
+
+        webView.setupWebView(RampInstantWebViewClient(), jsInterface)
 
         intent.extras?.getParcelable<Config>(CONFIG_EXTRA)?.let {
             config = it
@@ -40,40 +63,6 @@ internal class RampInstantActivity : AppCompatActivity() {
             webView.loadUrl(buildUrl(config))
         }
     }
-
-    @SuppressLint("SetJavaScriptEnabled")
-    fun setupWebView(webView: WebView) {
-        webView.settings.javaScriptEnabled = true
-        webView.settings.javaScriptCanOpenWindowsAutomatically = true
-        webView.settings.setSupportMultipleWindows(true)
-        webView.webViewClient = RampInstantWebViewClient()
-
-        webView.addJavascriptInterface(RampInstantMobileInterface(
-            onSuccess = {
-                Timber.d("onSuccess")
-                val intent = Intent(FINISH_RECEIVER)
-                sendBroadcast(intent)
-            },
-            onError = {
-                Timber.d("onError")
-                val intent = Intent(FINISH_RECEIVER)
-                sendBroadcast(intent)
-            },
-            onClose = {
-                Timber.d("onClose")
-                finish()
-            },
-            onOpenUrl = { url ->
-                Timber.d("onOpenUrl")
-                val intent = Intent(this, BankActivity::class.java)
-                intent.putExtra(BankActivity.INTENT_URL, url)
-                startActivity(intent)
-            }
-        ), RampInstantMobileInterface.RampInstantMobileInterfaceName)
-
-        webView.webChromeClient = RIWebViewChromeClient(this)
-    }
-
 
     override fun onBackPressed() {
         if (webView.canGoBack()) {

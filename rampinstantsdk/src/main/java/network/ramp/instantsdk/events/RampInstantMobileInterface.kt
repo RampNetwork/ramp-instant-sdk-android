@@ -8,7 +8,7 @@ import org.greenrobot.eventbus.EventBus
 import timber.log.Timber
 import java.util.*
 
-internal class RampInstantMobileInterface(
+class RampInstantMobileInterface(
     val onSuccess: () -> Unit,
     val onError: () -> Unit,
     val onClose: () -> Unit,
