@@ -10,4 +10,7 @@
     <string name="demo_ramp_instant_sdk">Demo Ramp Instant Sdk</string>
     <string name="defaultHostLogoUrl">https%3A%2F%2Fcdn-images-1.medium.com%2Fmax%2F2600%2F1*nqtMwugX7TtpcS-5c3lRjw.png</string>
     <string name="start_ramp_instant">Start Ramp Instant</string>
+    <string name="widget_url">widget url</string>
+    <string name="widget_url_hint">https://ri-widget-dev.firebaseapp.com</string>
+    <string name="subscribe_on_events">subscribe on events</string>
 </resources>

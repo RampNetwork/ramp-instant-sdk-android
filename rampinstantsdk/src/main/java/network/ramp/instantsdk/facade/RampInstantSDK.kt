@@ -18,7 +18,8 @@ class RampInstantSDK(
     private val hostAppName: String,
     private val swapAsset: String = "",
     private val swapAmount: String = "",
-    private val webhookStatusUrl: String = ""
+    private val webhookStatusUrl: String = "",
+    private val url: String = ""
 ) {
 
     private lateinit var rampInstantEventHolder: (rampInstantEvent: RampInstantEvent) -> Unit
@@ -38,6 +39,7 @@ class RampInstantSDK(
                 userAddress = userAddress,
                 hostAppName = hostAppName,
                 hostLogoUrl = hostLogoUrl,
+                url = url,
                 webhookStatusUrl = webhookStatusUrl
             )
         )

@@ -23,6 +23,7 @@
             android:name="network.ramp.instantsdk.ui.bank.BankActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/RampInstant.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -40,6 +41,7 @@
             android:name="network.ramp.instantsdk.ui.rampinstant.RampInstantActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/RampInstant.NoActionBar">
 
         </activity>

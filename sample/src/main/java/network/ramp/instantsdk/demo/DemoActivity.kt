@@ -25,7 +25,8 @@ class DemoActivity : AppCompatActivity() {
                 userAddress = userAddressEditText.getContent(),
                 hostLogoUrl = hostLogoUrlEditText.getContent(),
                 hostAppName = hostAppNameEditText.getContent(),
-                webhookStatusUrl = webHookStatusUrlEditText.getContent()
+                webhookStatusUrl = webHookStatusUrlEditText.getContent(),
+                url = urlEditText.getContent()
             )
             if (eventSwitch.isChecked)
                 rampInstantSDK.on { event ->
