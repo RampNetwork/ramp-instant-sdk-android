@@ -33,27 +33,25 @@ Add this in your `AndroidManifest.xml` file:
             android:name="network.ramp.instantsdk.ui.bank.BankActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
             android:theme="@style/RampInstant.NoActionBar">
-            <intent-filter android:label="deeplinkMail">
+            <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data
-                    android:host="auth.truelayer.com"
-                    android:pathPrefix="/oauth/callback"
-                    android:scheme="https" />
-            </intent-filter>
-            <intent-filter android:label="deeplinkBank">
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
                 <data
-                    android:host="pay.truelayer.com"
-                    android:pathPrefix="/openbanking/redirect-uri"
-                    android:scheme="https" />
+                    android:host="ramp"
+                    android:scheme="rampnetwork" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="network.ramp.instantsdk.ui.rampinstant.RampInstantActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/RampInstant.NoActionBar">
 
         </activity>
 	    ...
@@ -101,7 +99,8 @@ To start using RampInstant in your app, simply create RampInstantSDK instance wi
                 userAddress,
                 hostLogoUrl,
                 hostAppName,
-                webhookStatusUrl
+                webhookStatusUrl,
+		url
           	)
 		
 		
