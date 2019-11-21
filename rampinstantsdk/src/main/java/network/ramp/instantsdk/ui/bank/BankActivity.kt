@@ -85,16 +85,6 @@ internal class BankActivity : AppCompatActivity() {
     companion object {
         const val FINISH_RECEIVER = "finish_activity"
         const val INTENT_URL = "url"
-        val BROWSER_PACKAGE_NAMES = arrayOf(
-            "com.android.chrome",
-            "org.mozilla.firefox",
-            "com.UCMobile.intl",
-            "com.sec.android.app.sbrowser",
-            "com.opera.browser",
-            "com.opera.mini.native",
-            "com.microsoft.emmx"
-        )
-        const val ACTION_VIEW_INTENT = "android.intent.action.VIEW"
     }
 
     private fun openUrl(
@@ -102,21 +92,8 @@ internal class BankActivity : AppCompatActivity() {
         destinationUrl: String,
         view: WebView
     ) {
-        var isAppOpened = false
-        try {
-            val intent = Intent(ACTION_VIEW_INTENT)
-            intent.data = Uri.parse(destinationUrl)
-            val activity = intent.resolveActivity(context.packageManager)
-            if (activity != null && !BROWSER_PACKAGE_NAMES.contains(activity.packageName)) {
-                context.startActivity(intent)
-                isAppOpened = true
-            }
-        } catch (ignore: Exception) {
-        }
-        if (!isAppOpened) {
-            Timber.d("isAppOpened : $isAppOpened  Load url $destinationUrl")
-            view.loadUrl(destinationUrl)
-        }
+        Timber.d("Load url $destinationUrl")
+        view.loadUrl(destinationUrl)
     }
 
     inner class BankWebViewClient : WebViewClient() {
