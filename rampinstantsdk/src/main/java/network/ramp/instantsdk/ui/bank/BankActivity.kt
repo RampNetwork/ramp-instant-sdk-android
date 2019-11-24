@@ -85,14 +85,8 @@ internal class BankActivity : AppCompatActivity() {
     companion object {
         const val FINISH_RECEIVER = "finish_activity"
         const val INTENT_URL = "url"
-        val BROWSER_PACKAGE_NAMES = arrayOf(
-            "com.android.chrome",
-            "org.mozilla.firefox",
-            "com.UCMobile.intl",
-            "com.sec.android.app.sbrowser",
-            "com.opera.browser",
-            "com.opera.mini.native",
-            "com.microsoft.emmx"
+        val BANK_HOST_NAMES = arrayOf(
+            "verify.monzo.com"
         )
         const val ACTION_VIEW_INTENT = "android.intent.action.VIEW"
     }
@@ -107,11 +101,13 @@ internal class BankActivity : AppCompatActivity() {
             val intent = Intent(ACTION_VIEW_INTENT)
             intent.data = Uri.parse(destinationUrl)
             val activity = intent.resolveActivity(context.packageManager)
-            if (activity != null && !BROWSER_PACKAGE_NAMES.contains(activity.packageName)) {
+            Timber.d("PACKAGE: ${activity.packageName}")
+            if (activity != null && BANK_HOST_NAMES.contains(intent.data?.host ?: "no host")) {
                 context.startActivity(intent)
                 isAppOpened = true
             }
         } catch (ignore: Exception) {
+            Timber.d(ignore)
         }
         if (!isAppOpened) {
             Timber.d("isAppOpened : $isAppOpened  Load url $destinationUrl")
