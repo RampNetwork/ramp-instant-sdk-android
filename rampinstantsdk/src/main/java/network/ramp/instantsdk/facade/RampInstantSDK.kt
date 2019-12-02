@@ -16,6 +16,7 @@ class RampInstantSDK(
     private val userAddress: String,
     private val hostLogoUrl: String,
     private val hostAppName: String,
+    private val appId: String,
     private val swapAsset: String = "",
     private val swapAmount: String = "",
     private val webhookStatusUrl: String = "",
@@ -39,6 +40,7 @@ class RampInstantSDK(
                 userAddress = userAddress,
                 hostAppName = hostAppName,
                 hostLogoUrl = hostLogoUrl,
+                appId = appId,
                 url = url,
                 webhookStatusUrl = webhookStatusUrl
             )

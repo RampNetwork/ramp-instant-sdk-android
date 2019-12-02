@@ -32,7 +32,7 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ramp"
+                    android:host="ramp-demo-app"
                     android:scheme="rampnetwork" />
             </intent-filter>
 

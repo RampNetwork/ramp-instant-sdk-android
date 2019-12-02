@@ -25,6 +25,7 @@ class DemoActivity : AppCompatActivity() {
                 userAddress = userAddressEditText.getContent(),
                 hostLogoUrl = hostLogoUrlEditText.getContent(),
                 hostAppName = hostAppNameEditText.getContent(),
+                appId = "ramp-demo-app",
                 webhookStatusUrl = webHookStatusUrlEditText.getContent(),
                 url = urlEditText.getContent()
             )

@@ -28,6 +28,11 @@ internal data class Config(
      */
     val hostAppName: String,
     /**
+     * In mobile context we need this id to properly redirect user back to application after bank connection and payment
+     * This Id should be specified as `domain` in intent filters during SDK integration
+     */
+    val appId: String,
+    /**
      * allows to provide an alternative URL to load
      * a non-production version of the widget
      */

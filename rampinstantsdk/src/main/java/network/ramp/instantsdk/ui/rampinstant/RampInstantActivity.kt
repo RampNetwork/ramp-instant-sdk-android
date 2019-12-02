@@ -97,7 +97,8 @@ internal class RampInstantActivity : AppCompatActivity() {
                 concatenateIfNotBlank("&swapAmount=", config.swapAmount) +
                 concatenateIfNotBlank("&webhookStatusUrl=", config.webhookStatusUrl) +
                 "&variant=mobile&" +
-                "&hostUrl=*"
+                "&hostUrl=*" +
+                "&appId=${config.appId}"
     }
 
     private fun concatenateIfNotBlank(str1: String, str2: String): String {
