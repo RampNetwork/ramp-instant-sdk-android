@@ -42,7 +42,7 @@ Add this in your `AndroidManifest.xml` file:
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="ramp"
+                    android:host="-> your appId <-"
                     android:scheme="rampnetwork" />
             </intent-filter>
         </activity>
@@ -65,7 +65,7 @@ Add this to your module's `build.gradle` file (make sure the version matches the
 ```gradle
 dependencies {
 	...
-	    implementation 'com.github.RampNetwork:ramp-instant-sdk-android:v0.4.2'
+	    implementation 'com.github.RampNetwork:ramp-instant-sdk-android:v0.4.3'
 }
 ```
 
@@ -83,6 +83,8 @@ RampInstantSDK class needs to be fiiled with all the information necessary for R
 
 **swapAmount**: int string - wei or token units (optional)
 
+**appID**: id of your app
+   
 **webhookStatusUrl**: your URL for webhook updates (optional)
 
 **url**: allows to provide an alternative URL to load a non-production version of the widget (optional)
@@ -97,6 +99,7 @@ To start using RampInstant in your app, simply create RampInstantSDK instance wi
                 swapAsset,
                 swapAmount,
                 userAddress,
+		appId,
                 hostLogoUrl,
                 hostAppName,
                 webhookStatusUrl,
