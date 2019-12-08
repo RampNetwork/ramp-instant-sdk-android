@@ -1,7 +1,7 @@
 package network.ramp.instantsdk.events
 
 import android.webkit.JavascriptInterface
-import com.squareup.moshi.Moshi
+import com.google.gson.Gson
 import network.ramp.instantsdk.events.model.OpenLink
 import network.ramp.instantsdk.events.model.RampInstantEvent
 import org.greenrobot.eventbus.EventBus
@@ -14,16 +14,16 @@ class RampInstantMobileInterface(
     val onClose: () -> Unit,
     val onOpenUrl: (url: String) -> Unit
 ) {
-    private val moshi = Moshi.Builder().build()
+    val gson = Gson()
 
     @JavascriptInterface
     @Suppress("unused")
     fun postMessage(payloadJson: String) {
         Timber.d("JS INTERFACE postMessage $payloadJson")
 
-        val payload = moshi
-            .adapter<RampInstantEvent>(RampInstantEvent::class.java)
-            .fromJson(payloadJson)
+
+        val payload = gson
+            .fromJson(payloadJson, RampInstantEvent::class.java)
 
         //TODO() replace strings with types
         when (payload?.type?.toUpperCase(Locale.ENGLISH)) {
@@ -37,9 +37,8 @@ class RampInstantMobileInterface(
                 onClose()
             }
             OPEN_LINK -> {
-                val openLinkAdapter = moshi.adapter<OpenLink>(OpenLink::class.java)
                 payload.payload?.let {
-                    openLinkAdapter.fromJson(it)?.let { openLink ->
+                    gson.fromJson(it, OpenLink::class.java)?.let { openLink ->
                         onOpenUrl(openLink.url)
                     }
                 }
