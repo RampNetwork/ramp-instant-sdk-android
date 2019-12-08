@@ -9,7 +9,7 @@ import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_ramp_instant.*
 import network.ramp.instantsdk.R
 import network.ramp.instantsdk.events.RampInstantMobileInterface
 import network.ramp.instantsdk.events.model.InternalEvent
@@ -50,7 +50,7 @@ internal class RampInstantActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_ramp_instant)
 
         webView.setupWebView(RampInstantWebViewClient(), jsInterface)
 
