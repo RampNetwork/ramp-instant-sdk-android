@@ -7,6 +7,7 @@ import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
@@ -85,7 +86,7 @@ internal class BankActivity : AppCompatActivity() {
     companion object {
         const val FINISH_RECEIVER = "finish_activity"
         const val INTENT_URL = "url"
-        val BANK_HOST_NAMES = arrayOf(
+        val MANUALLY_HANDLED_HTTP_HOSTS = arrayOf(
             "verify.monzo.com"
         )
         const val ACTION_VIEW_INTENT = "android.intent.action.VIEW"
@@ -102,7 +103,12 @@ internal class BankActivity : AppCompatActivity() {
             intent.data = Uri.parse(destinationUrl)
             val activity = intent.resolveActivity(context.packageManager)
             Timber.d("PACKAGE: ${activity.packageName}")
-            if (activity != null && BANK_HOST_NAMES.contains(intent.data?.host ?: "no host")) {
+            if (intent.data?.scheme != "https" && intent.data?.scheme != "http") {
+                Log.i("OPEN URL", "http(s) ${intent.data?.scheme}")
+                context.startActivity(intent)
+                isAppOpened = true
+            } else if (activity != null && MANUALLY_HANDLED_HTTP_HOSTS.contains(intent.data?.host ?: "no host")) {
+                Log.i("OPEN URL", "non-http(s) ${intent.data?.scheme}")
                 context.startActivity(intent)
                 isAppOpened = true
             }
